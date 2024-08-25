@@ -74,11 +74,12 @@ int main(int argc,char *argv[])
     r_count = read(fd,buffer->data,data_size);
     for(int i = 0; i <= r_count; i++)
     {
-        printf("%02x\t",(unsigned char)buffer->data[i]);
-        if(i%10 == 0)
-        {
-            printf("\n");
-        }
+        // printf("%02x\t",(unsigned char)buffer->data[i]);
+        printf("%c",buffer->data[i]);
+        // if(i%10 == 0)
+        // {
+        //     printf("\n");
+        // }
     }
     
     printf("\n");
