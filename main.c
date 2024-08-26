@@ -73,14 +73,12 @@ int main(int argc,char *argv[])
     read(fd,&buffer->end_log_p,4);
     read(fd,&buffer->flags,2);
 
-    printf("event begin:%s %d %d %d %d %d\n",\
+    printf("event begin:%s event type:%d server id:%d event lenght:%d next event begin point:%d\n",\
     time,\
-    buffer->timestamp,\
     buffer->type,\
     buffer->server_id,\
     buffer->event_len,\
-    buffer->end_log_p,\
-    buffer->flags
+    buffer->end_log_p + 2
     );
 
 
@@ -90,16 +88,31 @@ int main(int argc,char *argv[])
         perror("malloc data");
     }
     
-    r_count = read(fd,buffer->data,data_size);
-    for(int i = 0; i <= r_count; i++)
+    r_count = read(fd,buffer->data,data_size); 
+    if(r_count <=0)
     {
-        // printf("%02x\t",(unsigned char)buffer->data[i]);
-        printf("%c",buffer->data[i]);
-        // if(i%10 == 0)
-        // {
-        //     printf("\n");
-        // }
+        return 1;
     }
+
+    char binlogver[4];
+    memcpy(binlogver,buffer->data,4);
+    for (int i = 0;i <= strlen(binlogver); i++)
+    {
+        printf("%d",binlogver[i]);
+    }   
+    printf("\n");
+
+    // for(int i = 0; i <= r_count; i++)
+    // {
+    //     char binlogver[4];
+    //     memcpy()
+    //     // printf("%02x\t",(unsigned char)buffer->data[i]);
+    //     // printf("%c",buffer->data[i]);
+    //     // if(i%10 == 0)
+    //     // {
+    //     //     printf("\n");
+    //     // }
+    // }
     
     printf("\n");
     
